@@ -181,6 +181,9 @@ class ExecutePreprocessor(Preprocessor):
             try:
                 kc.wait_for_ready(timeout=startup_timeout)
             except RuntimeError:
+                self.log.error([
+                    startup_timeout, kernel_name, kwargs
+                ])
                 kc.stop_channels()
                 km.shutdown_kernel()
                 raise
